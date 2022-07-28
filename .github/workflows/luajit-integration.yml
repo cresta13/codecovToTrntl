@@ -2,8 +2,8 @@
 # implement integration testing without manual LuaJIT submodule
 # bump and draft PR creation.
 # It bumps the given LuaJIT revision for the given Tarantool
-# release, builds Tarantool with the given buildtype and GC64
-# option and runs Tarantool testing suite.
+# release, builds Tarantool with the given buildtype, GC64 and
+# CMAKE_EXTRA_PARAMS options and runs Tarantool testing suite.
 
 name: LuaJIT integration testing
 
@@ -20,6 +20,10 @@ on:
         required: false
         type: string
         default: OFF
+      CMAKE_EXTRA_PARAMS:
+        description: CMake parameters to be passed on configuration step
+        required: false
+        type: string
       host:
         description: Type of machine to run the GitHub job on
         required: true
@@ -92,4 +96,5 @@ jobs:
           CMAKE_EXTRA_PARAMS: >
             -DCMAKE_BUILD_TYPE=${{ inputs.buildtype }}
             -DLUAJIT_ENABLE_GC64=${{ inputs.GC64 }}
+            ${{ inputs.CMAKE_EXTRA_PARAMS }}
         run: make -f .test.mk test-luajit-${{ env.PLATFORM }}-${{ env.ARCH }}
