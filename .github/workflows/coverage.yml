@@ -67,7 +67,7 @@ jobs:
       - name: Upload coverage results to codecov.io
         uses: codecov/codecov-action@v3
         with:
-          github-token: ${{ secrets.CODECOV_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: ./coverage.info
 
       - name: Send VK Teams message on failure
