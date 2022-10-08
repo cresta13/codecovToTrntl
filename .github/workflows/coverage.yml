@@ -64,6 +64,19 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: ./coverage.info
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          github-token: ${{ secrets.CODECOV_TOKEN}}
+          directory: ./test_run
+          env_vars: OS,PYTHON
+          fail_ci_if_error: true
+          files: test_run/test-run.py
+          flags: unittests
+          name: codecov-umbrella
+          path_to_write_report: ./coverage/codecov_report.txt
+          verbose: true
+
       - name: Send VK Teams message on failure
         if: failure()
         uses: ./.github/actions/report-job-status
